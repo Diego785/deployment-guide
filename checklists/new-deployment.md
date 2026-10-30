@@ -18,7 +18,7 @@ Details for each step in [10 · Deploy step by step](../docs/10-deploy-step-by-s
 - [ ] `docker compose config` OK
 - [ ] Image pulled (registry login if private)
 - [ ] Database `healthy`
-- [ ] App `Up`, logs clean, `docker exec nginx wget -qO- http://my-app:3000/api/health` answers
+- [ ] App `Up`, logs clean, `docker exec nginx curl -s http://my-app:3000/api/health` answers
 - [ ] Seen through an SSH tunnel
 - [ ] Phase 1 `.conf` → `nginx -t` OK → reload → `curl -H "Host: …" http://127.0.0.1/` shows my app
 - [ ] DNS A record → `nslookup` returns the IP

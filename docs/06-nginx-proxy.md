@@ -172,7 +172,7 @@ docker exec nginx nginx -s reload    # 2. only if 1 passed
 # From the server, without depending on DNS: ask nginx for your domain explicitly
 curl -I -H "Host: app.example.com" http://127.0.0.1/
 # From the nginx container, check it can reach the app
-docker exec nginx wget -qO- http://my-app:3000/api/health
+docker exec nginx curl -s http://my-app:3000/api/health
 # nginx's logs (errors at the end)
 docker logs --tail 50 nginx
 ```

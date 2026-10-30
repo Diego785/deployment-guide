@@ -76,7 +76,7 @@ docker compose logs -f app       # Ctrl+C to stop watching
   done and the server listening. From the server, test it inside the network:
 
   ```bash
-  docker exec nginx wget -qO- http://my-app:3000/api/health
+  docker exec nginx curl -s http://my-app:3000/api/health
   ```
 
   It must answer (e.g. `{"status":"ok"}`). If `nginx` can't resolve `my-app`, the app isn't on the

@@ -47,7 +47,7 @@ docker compose exec db psql -U my_app my_app
 ```bash
 docker exec nginx nginx -t                 # ALWAYS first
 docker exec nginx nginx -s reload          # only if -t passed
-docker exec nginx wget -qO- http://my-app:3000/api/health
+docker exec nginx curl -s http://my-app:3000/api/health
 curl -I -H "Host: app.example.com" http://127.0.0.1/
 docker logs --tail 50 nginx
 ```

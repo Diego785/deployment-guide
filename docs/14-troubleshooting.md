@@ -11,7 +11,7 @@ DNS → port 80/443 open → nginx has a server for the domain → nginx reaches
 | DNS | `nslookup app.example.com 1.1.1.1` → the server's IP? |
 | Port | `curl -I http://203.0.113.10` from your computer answers anything? |
 | nginx server | `curl -I -H "Host: app.example.com" http://127.0.0.1/` on the server → your app or another site? |
-| nginx → app | `docker exec nginx wget -qO- http://my-app:3000/api/health` |
+| nginx → app | `docker exec nginx curl -s http://my-app:3000/api/health` |
 | App | `docker compose ps`, `docker compose logs --tail 100 app` |
 | App → DB | `docker compose logs db`; `docker compose exec app env | grep DATABASE_URL` points to `my-app-db`? |
 
