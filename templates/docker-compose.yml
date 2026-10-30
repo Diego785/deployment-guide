@@ -1,0 +1,63 @@
+# App + Postgres behind a shared nginx. Copy to the project folder on the server and replace:
+#   my-app            → your project's name (also the container nginx will proxy to)
+#   ghcr.io/me/my-app → your image
+#   proxy-network     → the server's shared network (see the inventory)
+# Variables come from the .env next to this file (see .env.example).
+name: my-app
+
+services:
+  app:
+    image: ghcr.io/me/my-app:${APP_TAG}
+    container_name: my-app
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+      - proxy-network
+    # No published ports: nginx reaches http://my-app:3000 over proxy-network.
+    # Temporary demo without a domain (remove afterwards):
+    # ports:
+    #   - "127.0.0.1:3400:3000"
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db:
+    image: postgres:16-alpine
+    container_name: my-app-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  db-data:
+
+networks:
+  internal:
+  proxy-network:
+    external: true
