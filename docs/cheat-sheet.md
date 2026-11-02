@@ -11,6 +11,20 @@ scp my-server:/srv/apps/my-app/backups/x.dump .    # copy from the server
 ssh -N -L 8080:<container-ip>:3000 my-server       # tunnel: http://localhost:8080
 ```
 
+## New server (16, 17)
+
+```bash
+apt update && apt full-upgrade -y; [ -f /var/run/reboot-required ] && echo "reboot needed"
+adduser deploy && usermod -aG sudo deploy
+rsync --archive --chown=deploy:deploy ~/.ssh /home/deploy      # then test ssh deploy@… in a NEW terminal
+sudo sshd -t && sudo sshd -T | grep -Ei '^(passwordauthentication|permitrootlogin)' && sudo systemctl reload ssh
+sudo ufw allow OpenSSH && sudo ufw allow 80/tcp && sudo ufw allow 443/tcp && sudo ufw enable
+sudo fail2ban-client status sshd
+docker run --rm hello-world && docker compose version
+docker network create proxy-network
+sudo ss -tlnp | grep -E ':(80|443) '          # who owns the web ports (18)
+```
+
 ## Look (safe, change nothing)
 
 ```bash
@@ -53,6 +67,14 @@ docker logs --tail 50 nginx
 ```
 
 **Never** `docker restart nginx` on a shared server.
+
+## nginx on the system (not in Docker, 18)
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+sudo certbot certonly --webroot -w /var/www/html -d app.example.com --dry-run
+systemctl list-timers | grep -i certbot
+```
 
 ## Certificates (from the proxy folder)
 

@@ -23,6 +23,11 @@ so say why a step exists, not only the command.
   commands, `docker compose down -v`, `docker network rm` on shared networks, touch other projects'
   folders or `.conf` files, or read `.env`, `.git-credentials`, `.bash_history` or keys.
 - **If something doesn't match what you expected, stop** and explain before continuing.
+- **Pick the path from the person's situation** (README, "How to use this guide"): a fresh server
+  goes through 16 and 17; a server set up differently through 18, following whatever already owns
+  ports 80/443 instead of adding a second web server.
+- **SSH and firewall changes on a fresh server:** keep the current session open and check every
+  change from a new one before going on; mention the provider's web console as the way back.
 
 ## Editing this guide
 

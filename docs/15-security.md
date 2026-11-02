@@ -34,7 +34,7 @@ Expected: 22, 80, 443. Anything else, find out what it is ([02](02-inventory.md)
 
 ## SSH
 
-Good practice for a server you administer:
+Good practice for a server you administer (step by step in [16](16-server-from-scratch.md#5--lock-down-ssh)):
 
 - Key-only login (`PasswordAuthentication no` in `/etc/ssh/sshd_config`) **after** checking your
   key works in a second session.

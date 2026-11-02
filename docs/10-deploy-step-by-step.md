@@ -1,6 +1,8 @@
 # 10 · Deploy step by step
 
-The whole procedure for a new project on a server that already has a shared nginx. Each step says
+The whole procedure for a new project on a server that already has a shared nginx. No proxy yet?
+[16](16-server-from-scratch.md) and [17](17-shared-proxy-from-scratch.md) first. A system nginx, a
+panel or another proxy? [18](18-servers-set-up-differently.md). Each step says
 **what to do**, **how to check it** and **how to undo it**. Don't go to the next step until the
 check passes.
 

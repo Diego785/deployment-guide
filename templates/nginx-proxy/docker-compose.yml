@@ -1,0 +1,33 @@
+# The shared reverse proxy: nginx (the only container publishing ports) + certbot (run on demand).
+# Save as /srv/nginx-proxy/docker-compose.yml on a server that has no proxy yet
+# (docs/17-shared-proxy-from-scratch.md). The network must exist first:
+#   docker network create proxy-network
+name: nginx-proxy
+
+services:
+  nginx:
+    # Pin the major/minor version; update it on purpose (docs/17, "Updating the proxy").
+    image: nginx:1.27-alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf:/etc/nginx/conf.d            # one .conf per site
+      - ./certbot/www:/var/www/certbot:ro   # ACME challenge files
+      - ./certbot/conf:/etc/letsencrypt:ro  # certificates
+    networks:
+      - proxy-network
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    # Not started by "docker compose up": run with "docker compose run --rm certbot …".
+    profiles: ["tools"]
+
+networks:
+  proxy-network:
+    external: true

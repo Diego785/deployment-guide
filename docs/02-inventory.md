@@ -64,6 +64,15 @@ docker inspect <container> --format '{{index .Config.Labels "com.docker.compose.
 
 The second command gives the folder of the project's `docker-compose.yml`.
 
+## What kind of server is it?
+
+- *Container publishing 443* is an nginx container → the guide's model: continue with
+  [10](10-deploy-step-by-step.md).
+- *Web servers on the system* or *Hosting panels and other proxies* list something → it's set up
+  differently: [18](18-servers-set-up-differently.md).
+- Docker doesn't answer, or nothing at all serves the web → a fresh server:
+  [16](16-server-from-scratch.md) and [17](17-shared-proxy-from-scratch.md), if it's yours.
+
 ## Before moving on
 
 Write down in a few lines: projects folder, proxy name, config folder, shared network, certificate

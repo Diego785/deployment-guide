@@ -1,7 +1,8 @@
 # Deployment guide
 
 How to put a web application on a Linux server with Docker, nginx and HTTPS, explained from
-scratch, step by step, without breaking what is already running there.
+scratch, step by step: from an empty server to one shared by many projects, and on servers set up
+someone else's way, without breaking what is already running there.
 
 It works for any project (Next.js, Node, Python, PHP, Go…) and any server (your own VPS, a borrowed
 one, a client's). Examples use made-up names such as `my-app` and `app.example.com`: replace them
@@ -9,8 +10,19 @@ with yours.
 
 ## How to use this guide
 
-- **First time:** read [Concepts](docs/00-concepts.md), then follow
-  [Deploy step by step](docs/10-deploy-step-by-step.md) from start to finish.
+Start from your situation:
+
+| Your situation | Read, in order |
+| --- | --- |
+| **A brand-new server** (empty VPS/VDS/dedicated, only root and an IP) | [16](docs/16-server-from-scratch.md) → [17](docs/17-shared-proxy-from-scratch.md) → [10](docs/10-deploy-step-by-step.md) |
+| **A server already prepared like this guide** (Docker + a shared nginx container) | [02](docs/02-inventory.md) → [10](docs/10-deploy-step-by-step.md) |
+| **A server set up differently** (nginx or Apache on the system, Traefik, Caddy, a panel, apps on open ports, a broken config) | [02](docs/02-inventory.md) → [18](docs/18-servers-set-up-differently.md) |
+| **Docker but no proxy yet**, and the server is yours | [02](docs/02-inventory.md) → [17](docs/17-shared-proxy-from-scratch.md) → [10](docs/10-deploy-step-by-step.md) |
+| **No domain yet** | [09](docs/09-without-a-domain.md) |
+| **Updating, backing up, retiring** a project | [11](docs/11-updates-and-rollback.md), [12](docs/12-backups.md), [13](docs/13-retiring-a-project.md) |
+| **Moving to another server, deploying from CI, monitoring, wildcard certificates** | [19](docs/19-advanced.md) |
+
+- **First time with all this:** read [Concepts](docs/00-concepts.md) first.
 - **You know the basics:** go straight to the [checklists](checklists/) and the
   [templates](templates/).
 - **Something broke:** [Troubleshooting](docs/14-troubleshooting.md).
@@ -38,6 +50,10 @@ with yours.
 | 13 | [Retiring a project](docs/13-retiring-a-project.md) | Shutting down and cleaning up without hurting others |
 | 14 | [Troubleshooting](docs/14-troubleshooting.md) | 502s, certificates, restarting containers… |
 | 15 | [Security](docs/15-security.md) | Secrets, firewall, access |
+| 16 | [A server from scratch](docs/16-server-from-scratch.md) | First login, user, SSH keys only, firewall, updates, swap, Docker |
+| 17 | [The shared proxy from scratch](docs/17-shared-proxy-from-scratch.md) | nginx + certbot for every project, default site, renewal |
+| 18 | [Servers set up differently](docs/18-servers-set-up-differently.md) | System nginx/Apache, Traefik, Caddy, panels, open ports, broken configs |
+| 19 | [Advanced](docs/19-advanced.md) | Moving servers, CI deploys, monitoring, basic auth, rate limits, wildcards |
 | — | [Cheat sheet](docs/cheat-sheet.md) | The most used commands on one page |
 
 ## The model in one picture
